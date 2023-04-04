@@ -124,9 +124,9 @@ function Pins() {
         </div>
       )}
         <form onSubmit={createPin} className="flex flex-col gap-2 border-2 border-[#1F1F1F] rounded-md py-4 px-6 shadow-2xl mt-6">
-          <input type="text" placeholder="Input Pin Title" className="bg-[#3b3b3b] rounded-md p-2 font-body font-medium text-sm text-white focus:outline-none w-full" required onChange={(e) => setPinName(e.target.value)} />
+          <input type="text" placeholder="Enter Pin Title (e.g Facebook Portal)" className="bg-[#3b3b3b] rounded-md p-2 font-body font-medium text-sm text-white focus:outline-none w-full" required onChange={(e) => setPinName(e.target.value)} />
           <div className="flex flex-row gap-2">
-            <input type="text" placeholder="Input Pin Link" className="bg-[#3b3b3b] rounded-md p-2 font-body font-medium text-sm text-white focus:outline-none w-9/12" required onChange={(e) => setPinLink(e.target.value)} />
+            <input type="text" placeholder="Paste URL (e.g https://facebook.com)" className="bg-[#3b3b3b] rounded-md p-2 font-body font-medium text-sm text-white focus:outline-none w-9/12" required onChange={(e) => setPinLink(e.target.value)} />
             <button type="submit" className="font-body font-regular text-sm text-white bg-blue rounded-md focus:outline-none w-5/12">Add Pin</button>
           </div>
         </form>
