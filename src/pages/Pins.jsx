@@ -111,10 +111,10 @@ function Pins() {
     <div className="m-8 overflow-x-hidden  md:m-20">
       <Logout />
       <div>
-        <div className="flex flex-row gap-6 my-16 place-content-center items-center">
+        <div className="flex flex-row gap-7 my-16 place-content-center items-center">
             {
               responseImage ? (
-                <img src={responseImage} alt="profile" className="w-24 h-auto rounded-full md:w-32" onClick={() => setIsAddPhoto(!isAddPhoto)}/>
+                <img src={responseImage} alt="profile" className="w-24 h-auto rounded-full md:w-32 border-2 border-[#0085FF]" onClick={() => setIsAddPhoto(!isAddPhoto)}/>
               ) : (
               <div className="grid place-items-center bg-[#2c2c2c] px-4 py-6 rounded-full" onClick={() => setIsAddPhoto(!isAddPhoto)}>
                 <AiOutlineCamera className="text-white text-2xl" />
