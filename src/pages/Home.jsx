@@ -27,7 +27,7 @@ const Home = () => {
               <Link to={'/auth/login'} className="sm:text-white">Get Started</Link>
             </button>
             <div className="grid grid-cols-1 place-items-center">
-              <a href="https://github.com" target="_blank">
+              <a href="https://github.com/francistinao/pinpals" target="_blank">
                 <button button className="hover:bg-[#2c2c2c] flex space-x-3 gap-2 font-body font-semibold bg-secondary border-2 border-[#686868] text-white p-4 rounded-md text-xs items-center sm:text-lg py-5">
                   Github Repo 
                 <AiFillGithub className="text-2xl text-white xxxsm:hidden lg:block"/>
