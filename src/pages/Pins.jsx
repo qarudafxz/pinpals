@@ -131,7 +131,7 @@ function Pins() {
           </div>
         </form>
       </div>
-      <div className="mt-9 md:grid grid-cols-2 gap-2 lg:grid-cols-3 xl:grid-cols-4">
+      <div className="mt-9 xxxsm:flex flex-col gap-2 xxsm:flex flex-col gap-2 sm:flex flex-col gap-2 md:grid grid-cols-2 gap-2 lg:grid-cols-3 xl:grid-cols-4">
         {
           pins.map(pin => {
             return (
