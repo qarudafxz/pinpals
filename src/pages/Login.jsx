@@ -5,10 +5,12 @@ import axios from 'axios';
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer';
 import Bg from '../assets/bg_2.png';
+
+import { ReactComponent as Loading } from '../assets/loading.svg';
+
 import { IoEyeSharp } from 'react-icons/io5';
 
 import { buildUrl } from '../utils/buildUrl';
-
 import { useSetUserId } from '../hooks/useSetUserId';
 
 function Login() {
@@ -17,11 +19,13 @@ function Login() {
   const [ isVisible, setIsVisible ] = useState(false);
   const [_, setCookies] = useCookies(['access_token']);
   const [isInvalid, setIsInvalid ] = useState(false);
+  const [isLoaded, setIsLoaded ] = useState(true);
 
   const navigate = useNavigate();
 
   const submitInfo = async (e) => {
     e.preventDefault();
+    setIsLoaded(false);
     try {
       const response = await axios.post(buildUrl('auth/login'), {
         username,
@@ -34,9 +38,9 @@ function Login() {
 
       if(!response.data.token) {
         setIsInvalid(true);
+        setIsLoaded(true);
         return;
       }
-
       navigate('/pins/all/');
     } catch(err) {
       console.log(err);
@@ -56,6 +60,14 @@ function Login() {
       <Navbar />
       <div className="grid place-items-center">
         <div className="bg-secondary border-2 border-[#686868] rounded-md py-6 px-4 mt-20 md:w-7/12 lg:w-5/12 xl:w-2/12">
+          {
+            !isLoaded && (
+              <div className="grid place-items-center">
+                <Loading className="pt-14"/>
+                <h1 className="text-white font-logo text-xl mb-10">Loading pins</h1>
+              </div>
+            )
+          }
           <h1 className="text-4xl font-header font-semibold text-blue text-center mb-9">Login</h1>
             <form className="flex flex-col gap-2" onSubmit={submitInfo}>
               <input type="text" className="focus:outline-none font-body bg-[#686868] rounded-md py-2 pl-3 text-white" placeholder="Username" required onChange={(e) => setUsername(e.target.value)}></input>
@@ -72,8 +84,6 @@ function Login() {
                   onClick={() => setIsVisible(!isVisible)}
                 />
               </div>
-
-
               {
                 isInvalid && <h1 className="font-body text-sm text-red-600 mt-2">Username or Password Incorrect</h1>
               }

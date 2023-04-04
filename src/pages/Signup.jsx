@@ -8,6 +8,7 @@ import Bg from '../assets/bg_2.png';
 import { IoEyeSharp } from 'react-icons/io5';
 
 import { buildUrl } from '../utils/buildUrl';
+import { ReactComponent as Loading } from '../assets/loading.svg';
 
 import { useSetUserId } from '../hooks/useSetUserId';
 
@@ -20,11 +21,13 @@ function Signup() {
   const [ isVisible, setIsVisible ] = useState(false);
   const [isInvalid, setIsInvalid ] = useState(false);
   const [ isSuccess, setIsSuccess ] = useState(false);
+  const [isLoaded, setIsLoaded ] = useState(true);
 
   const navigate = useNavigate();
 
   const setInfo = async (e) => {
     e.preventDefault();
+    setIsLoaded(false);
     if(password != confirmPassword) {
       setIsInvalid(true);
       return;
@@ -85,6 +88,14 @@ function Signup() {
               { isInvalid && <p className="text-red-500 text-sm font-body font-semibold">Password doesn't match</p>}
               <input type="password" className="focus:outline-none font-body bg-[#686868] rounded-md py-2 pl-4 text-white" placeholder="Confirm Password" required onChange={(e) => setConfirmPassword(e.target.value)}></input>
               <button className="bg-blue py-2 px-4 rounded-md cursor-pointer font-body font-semibold text-white mt-10 xl:mb-8">Sign Up</button>
+              {
+                isLoaded && (
+                  <div className="grid place-items-center">
+                    <Loading className="pt-12" />
+                    <h1 className="text-white font-logo text-xl mb-10">Creating account...</h1>
+                  </div>
+                )
+              }
               <h1 className="font-body text-center text-sm text-white mt-5">Already have an account? <Link to={'/auth/login'} className="text-blue italic">Log In</Link></h1>
             </form>
         </div>

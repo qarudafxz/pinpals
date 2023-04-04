@@ -9,6 +9,8 @@ import { useGetUserId } from '../hooks/useGetUserId.js';
 import { buildUrl } from '../utils/buildUrl';
 import Logout from '../components/Logout';
 
+import { ReactComponent as Loading } from '../assets/loading.svg';
+
 function Pins() {
   const [pinName, setPinName] = useState("");
   const [pinLink, setPinLink] = useState("");
@@ -16,15 +18,19 @@ function Pins() {
   const [ isAddPhoto, setIsAddPhoto ] = useState(false);
   const [ imageLink, setImageLink ] = useState("");
   const [ responseImage, setResponseImage ] = useState("");
+  const [ pinsLoaded, setPinsLoaded ] = useState(false);
+  const [ nameLoaded, setNameLoaded ] = useState(false);
   const [ pins, setAllPins ] = useState([]);
 
   const navigate = useNavigate();
   const userID = useGetUserId();
 
   const fetchAllPins = async () => {
+    setPinsLoaded(true);
     try {
       const response = await axios.get(buildUrl(`pins/all/${userID}`));
       setAllPins(response.data);
+      setPinsLoaded(false);
     } catch(err) {
       console.log(err);
     }
@@ -46,8 +52,14 @@ function Pins() {
   }
 
   const getFirstName = async () => {
-    const response = await axios.get(buildUrl(`auth/firstname/${userID}`))
-    setFirstName(response.data);
+    setNameLoaded(true);
+    try {
+      const response = await axios.get(buildUrl(`auth/firstname/${userID}`))
+      setFirstName(response.data);
+      setNameLoaded(false);
+    } catch(e) {
+      console.log(e);
+    }
   }
 
   const deletePin = async (id) => {
@@ -112,7 +124,13 @@ function Pins() {
             }
           <div>
             <h1 className="text-md font-body font-normal text-white text-center md:text-3xl">Welcome Back!</h1>
-            <h1 className="text-2xl font-body font-semibold text-blue md:text-5xl">{firstName}</h1>
+            {
+              !nameLoaded ? (
+                <h1 className="text-2xl font-body font-semibold text-blue md:text-5xl">{firstName}</h1>
+              ): (
+                <Loading className="p-10"/>
+              )
+            }
           </div>
         </div>
         {isAddPhoto && (
@@ -131,7 +149,9 @@ function Pins() {
           </div>
         </form>
       </div>
-      <div className="mt-9 xxxsm:flex flex-col gap-2 xxsm:flex flex-col gap-2 sm:flex flex-col gap-2 md:grid grid-cols-2 gap-2 lg:grid-cols-3 xl:grid-cols-4">
+      {
+        !pinsLoaded ? (
+          <div className="mt-9 xxxsm:flex flex-col gap-2 xxsm:flex flex-col gap-2 sm:flex flex-col gap-2 md:grid grid-cols-2 gap-2 lg:grid-cols-3 xl:grid-cols-4">
         {
           pins.map(pin => {
             return (
@@ -146,6 +166,10 @@ function Pins() {
           })
         }
       </div>
+        ) : (
+          <Loading />
+        )
+      }
     </div>
   )
 }
