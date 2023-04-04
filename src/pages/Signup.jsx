@@ -31,7 +31,7 @@ function Signup() {
     }
 
     try {
-      await axios.post('http://localhost:3001/auth/signup', {
+      await axios.post(buildUrl('auth/signup'), {
         firstName,
         lastName,
         username,

@@ -6,7 +6,7 @@ import { AiOutlineCamera } from 'react-icons/ai';
 import axios from 'axios';
 
 import { useGetUserId } from '../hooks/useGetUserId.js';
-
+import { buildUrl } from '../utils/buildUrl';
 import Logout from '../components/Logout';
 
 function Pins() {
@@ -23,7 +23,7 @@ function Pins() {
 
   const fetchAllPins = async () => {
     try {
-      const response = await axios.get(`http://localhost:3001/pins/all/${userID}`);
+      const response = await axios.get(buildUrl(`pins/all/${userID}`));
       setAllPins(response.data);
     } catch(err) {
       console.log(err);
@@ -33,7 +33,7 @@ function Pins() {
   const createPin = async (e) => {
     e.preventDefault();
     try {
-      await axios.post(`http://localhost:3001/pins/add-pin`, {
+      await axios.post(buildUrl(`pins/add-pin`), {
         pinName,
         pinLink,
         pinOwner: userID
@@ -46,13 +46,13 @@ function Pins() {
   }
 
   const getFirstName = async () => {
-    const response = await axios.get(`http://localhost:3001/auth/firstname/${userID}`)
+    const response = await axios.get(buildUrl(`auth/firstname/${userID}`))
     setFirstName(response.data);
   }
 
   const deletePin = async (id) => {
     try {
-      await axios.delete(`http://localhost:3001/pins/delete/${id}`)
+      await axios.delete(buildUrl(`pins/delete/${id}`))
       console.log(id);
       fetchAllPins();
     } catch(err) {
@@ -63,7 +63,7 @@ function Pins() {
   const addImage = async (e) => {
     e.preventDefault();
     try {
-      await axios.put(`http://localhost:3001/auth/photo/${userID} `, {
+      await axios.put(buildUrl(`auth/photo/${userID} `), {
         imageUrl: imageLink
       })
 
@@ -75,7 +75,7 @@ function Pins() {
 
   const getImageLink = async () => {
     try {
-      const response = await axios.get(`http://localhost:3001/auth/image/${userID}`)
+      const response = await axios.get(buildUrl(`auth/image/${userID}`))
       setResponseImage(response.data);
       // console.log("Image fetched successfully");
     } catch(err) {

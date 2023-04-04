@@ -23,7 +23,7 @@ function Login() {
   const submitInfo = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:3001/auth/login', {
+      const response = await axios.post(buildUrl('auth/login'), {
         username,
         password
       })
