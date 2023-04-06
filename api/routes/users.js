@@ -28,7 +28,6 @@ router.post("/signup", async (req, res) => {
 
 	await newUser.save();
 	res.json({ newUser, message: "User saved successfully" });
-	console.log("User saved successfully");
 });
 
 //login
@@ -47,7 +46,6 @@ router.post("/login", async (req, res) => {
 
 	const token = jwt.sign({ id: user._id }, "secret");
 	res.json({ token, userID: user._id, message: "User logged in successfully" });
-	console.log("User logged in successfully");
 });
 
 //add profile photo
@@ -83,6 +81,22 @@ router.get("/image/:id", async (req, res) => {
 		res.json(user.imageUrl);
 	} catch (err) {
 		res.json(err.message);
+	}
+});
+
+//change password
+router.put("/change-password/:id", async (req, res) => {
+	try {
+		const user = await UserModel.findByIdAndUpdate(
+			req.params.id,
+			{
+				password: await bcrypt.hash(req.body.password, 10),
+			},
+			{ new: true }
+		);
+		res.status(200).json(user);
+	} catch (e) {
+		console.log(e);
 	}
 });
 

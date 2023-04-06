@@ -3,11 +3,13 @@ import { useNavigate } from 'react-router-dom';
 import { FiArrowUpRight } from 'react-icons/fi';
 import { BsTrash } from 'react-icons/bs';
 import { AiOutlineCamera } from 'react-icons/ai';
+import { IoMdSettings } from 'react-icons/io';
 import axios from 'axios';
 
 import { useGetUserId } from '../hooks/useGetUserId.js';
 import { buildUrl } from '../utils/buildUrl';
 import Logout from '../components/Logout';
+import ChangePassword from '../components/ChangePassword';
 
 import { ReactComponent as Loading } from '../assets/loading.svg';
 
@@ -21,6 +23,7 @@ function Pins() {
   const [ pinsLoaded, setPinsLoaded ] = useState(false);
   const [ nameLoaded, setNameLoaded ] = useState(false);
   const [ pins, setAllPins ] = useState([]);
+  const [ isChangePassword, setIsChangePassword ] = useState(false);
 
   const navigate = useNavigate();
   const userID = useGetUserId();
@@ -123,7 +126,10 @@ function Pins() {
               )
             }
           <div>
-            <h1 className="text-md font-body font-normal text-white text-center md:text-3xl">Welcome Back!</h1>
+            <div className="flex flex-row gap-2 items-center">
+              <h1 className="text-md font-body font-normal text-white md:text-3xl">Welcome Back!</h1>
+              <IoMdSettings className="text-white xxsm:text-xl lg:text-2xl xl:text-3xl ml-3 cursor-pointer" onClick={() => setIsChangePassword(!isChangePassword)}/>
+            </div>
             {
               !nameLoaded ? (
                 <h1 className="text-2xl font-body font-semibold text-blue md:text-5xl">{firstName}</h1>
@@ -133,6 +139,7 @@ function Pins() {
             }
           </div>
         </div>
+        <ChangePassword isChangePassword={isChangePassword}/>
         {isAddPhoto && (
         <div>
           <form onSubmit={addImage} className="flex flex-col gap-2 border-2 border-[#1F1F1F] rounded-md py-4 px-6 shadow-2xl mt-6">

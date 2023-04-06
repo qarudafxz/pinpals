@@ -76,11 +76,11 @@ function Login() {
                   type={isVisible ? "text" : "password"}
                   className="focus:outline-none font-body bg-[#686868] rounded-md py-2 pl-4 pr-12 text-white w-full"
                   placeholder="Password"
-                  required
+                  
                   onChange={(e) => setPassword(e.target.value)}
                 />
                 <IoEyeSharp
-                  className="absolute right-3 top-2 text-[#b9b9b9] text-xl cursor-pointer"
+                  className={`absolute right-3 top-2 text-xl cursor-pointer ${isVisible ? "text-blue" : "text-[#b9b9b9]"}`}
                   onClick={() => setIsVisible(!isVisible)}
                 />
               </div>

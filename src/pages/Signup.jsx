@@ -80,7 +80,7 @@ function Signup() {
                   onChange={(e) => setPassword(e.target.value)}
                 />
                 <IoEyeSharp
-                  className="absolute top-1/2 transform -translate-y-1/2 right-4 text-[#b8b8b8] cursor-pointer"
+                  className={`absolute top-1/2 transform -translate-y-1/2 right-4 cursor-pointer ${isVisible ? "text-blue" : "text-[#b8b8b8]"}`}
                   onClick={() => setIsVisible(!isVisible)}
                 />
               </div>
@@ -89,7 +89,7 @@ function Signup() {
               <input type="password" className="focus:outline-none font-body bg-[#686868] rounded-md py-2 pl-4 text-white" placeholder="Confirm Password" required onChange={(e) => setConfirmPassword(e.target.value)}></input>
               <button className="bg-blue py-2 px-4 rounded-md cursor-pointer font-body font-semibold text-white mt-10 xl:mb-8">Sign Up</button>
               {
-                isLoaded && (
+                !isLoaded && (
                   <div className="grid place-items-center">
                     <Loading className="pt-12" />
                     <h1 className="text-white font-logo text-xl mb-10">Creating account...</h1>
