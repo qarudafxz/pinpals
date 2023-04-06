@@ -65,7 +65,7 @@ const ChangePassword = ({isChangePassword}) => {
     <div className="">
       {
         isChangePassword && (
-          <form onSubmit={handleChangePassword} className="grid grid-rows-3 gap-2 mt-10 border-2 border-[#1F1F1F] rounded-md py-4 px-6 shadow-2xl">
+          <form onSubmit={handleChangePassword} className="flex flex-col gap-2 mt-10 border-2 border-[#1F1F1F] rounded-md py-4 px-6 shadow-2xl">
             {
               !isLoaded && <Loading className="p-4"/>
             }
