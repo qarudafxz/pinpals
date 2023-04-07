@@ -173,7 +173,7 @@ function Pins() {
         {
           pins.map(pin => {
             return (
-              <div className="flex flex-row justify-between gap-4 bg-[#2D2D2D] py-2 px-4 rounded-md items-center" key={pin._id}>
+              <div className="flex flex-row justify-between gap-4 bg-[#2D2D2D] py-2 px-4 rounded-md items-center hover:bg-[#4b4b4b] duration-300" key={pin._id}>
                 <a href={pin.pinLink} target="_blank" className="font-body font-medium text-sm text-white">{pin.pinName}</a>
                 <div className="flex flex-row gap-2">
                   <a href={pin.pinLink} target="_blank"><FiArrowUpRight className="text-white text-xl"/></a>
