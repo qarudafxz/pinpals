@@ -17,7 +17,7 @@ function Footer() {
           <li className="text-lg font-body font-normal text-sm hover:text-[#767676]"><a href="https://github.com/francistinao/pinpals" target="_blank">Contribute</a></li>
         </ul>
       </div> 
-      <div className="grid grid-rows-3 place-items-center mt-12 xsm: mt-28 sm:mt-36 md:mt-44 xl:place-items-end">
+      <div className="grid grid-rows-3 place-items-center mt-12 sm:mt-36 md:mt-44 xl:place-items-end">
         <img src={Logo} />
         <p className="text-lg text-sm font-body">Ⓒ 2023 Francis John Tin-ao</p>
       </div>

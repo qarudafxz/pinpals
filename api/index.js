@@ -8,7 +8,6 @@ import { pinsRouter } from "./routes/pins.js";
 
 dotenv.config();
 
-//const URI = `mongodb+srv://pinpals:pinpal1234@pinpals.yhbf8pp.mongodb.net/pinpals?retryWrites=true&w=majority`;
 const URI = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@pinpals.yhbf8pp.mongodb.net/pinpals?retryWrites=true&w=majority`;
 const app = express();
 

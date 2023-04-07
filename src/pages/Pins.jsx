@@ -5,7 +5,7 @@ import { BsTrash } from 'react-icons/bs';
 import { AiOutlineCamera } from 'react-icons/ai';
 import { IoMdSettings } from 'react-icons/io';
 import axios from 'axios';
-
+import { OWNER_USER_ID } from '../data/constant.js';
 import { useGetUserId } from '../hooks/useGetUserId.js';
 import { buildUrl } from '../utils/buildUrl';
 import Logout from '../components/Logout';
@@ -136,6 +136,17 @@ function Pins() {
               ): (
                 <Loading className="p-10"/>
               )
+            }
+            {
+              (OWNER_USER_ID === userID) ?(
+                <div className="flex flex-row items-center mt-2">
+                  <h1 className="mt-1 font-body font-semibold text-white italic bg-blue px-2 pl-4 rounded-sm w-full flex items-center">
+                    <img src="https://cultofthepartyparrot.com/flags/hd/iranparrot.gif" width="25" height="25" className="relative mr-3 pb-2"/>
+                    PinPal Dev
+                  </h1>
+                </div>
+              ) : 
+              null
             }
           </div>
         </div>
