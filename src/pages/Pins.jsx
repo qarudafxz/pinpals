@@ -22,6 +22,7 @@ function Pins() {
   const [ responseImage, setResponseImage ] = useState("");
   const [ pinsLoaded, setPinsLoaded ] = useState(false);
   const [ nameLoaded, setNameLoaded ] = useState(false);
+  const [ isSuccessPinsLoad, setSuccessPinsLoad] = useState(false);
   const [ pins, setAllPins ] = useState([]);
   const [ isChangePassword, setIsChangePassword ] = useState(false);
 
@@ -41,13 +42,14 @@ function Pins() {
 
   const createPin = async (e) => {
     e.preventDefault();
+    setSuccessPinsLoad(true);
     try {
       await axios.post(buildUrl(`pins/add-pin`), {
         pinName,
         pinLink,
         pinOwner: userID
       })
-
+      setSuccessPinsLoad(false);
       await fetchAllPins();
     } catch(err) {
       console.log(err);
@@ -165,6 +167,7 @@ function Pins() {
             <input type="text" placeholder="Paste URL (e.g https://facebook.com)" className="bg-[#3b3b3b] rounded-md p-2 font-body font-medium text-sm text-white focus:outline-none w-9/12" required onChange={(e) => setPinLink(e.target.value)} />
             <button type="submit" className="font-body font-regular text-sm text-white bg-blue rounded-md focus:outline-none w-5/12">Add Pin</button>
           </div>
+          { isSuccessPinsLoad && <Loading className="p-10"/>}
         </form>
       </div>
       {
