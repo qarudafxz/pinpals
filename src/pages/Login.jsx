@@ -56,10 +56,10 @@ function Login() {
   },[isInvalid] )
 
   return (
-    <div className="m-3 overflow-x-hidden">
+    <div className="m-8 overflow-x-hidden">
       <Navbar />
       <div className="grid place-items-center">
-        <div className="bg-secondary border-2 border-[#686868] rounded-md py-6 px-4 mt-20 md:w-7/12 lg:w-5/12 xl:w-2/12">
+        <div className="bg-secondary border-2 border-[#686868] rounded-md py-6 px-4 mt-20 xxxsm:w-10/12 md:w-7/12 lg:w-5/12 xl:w-2/12">
           {
             !isLoaded && (
               <div className="grid place-items-center">
