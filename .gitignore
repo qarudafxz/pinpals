@@ -24,3 +24,9 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+install.ps1
+PinPal.classic.appxbundle
+PinPal.sideload.msix
+PinPal.msixbundle
+utils/pwainstaller.exe
+readme.html
