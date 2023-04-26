@@ -7,6 +7,7 @@ import Footer from '../components/Footer';
 import Bg from '../assets/bg_2.png';
 import { IoEyeSharp } from 'react-icons/io5';
 import jwt_decode from 'jwt-decode';
+import TopLoadingBar from 'react-top-loading-bar';
 
 import { buildUrl } from '../utils/buildUrl';
 import { ReactComponent as Loading } from '../assets/loading.svg';
@@ -25,13 +26,16 @@ function Signup() {
   const [isLoaded, setIsLoaded ] = useState(true);
   const [ user, setUser ] = useState({});
   const [ hasGoogleAccount, setHasGoogleAccount ] = useState(false);
+  const [ progress, setProgress ] = useState(0);
   const navigate = useNavigate();
 
   const setInfo = async (e) => {
     e.preventDefault();
     setIsLoaded(false);
+    setProgress(30);
     if(password != confirmPassword) {
       setIsInvalid(true);
+      setIsLoaded(true);
       return;
     }
 
@@ -42,6 +46,7 @@ function Signup() {
         username,
         password,
       })
+      setProgress(100);
       console.log("Successfully signed up");
       setIsSuccess(true);
     } catch(err) {
@@ -50,6 +55,7 @@ function Signup() {
   }
 
   const handleCallbackResponse = async (response) => {
+    setProgress(30)
     const decoded = jwt_decode(response.credential);
     setUser(decoded)
 
@@ -61,6 +67,7 @@ function Signup() {
           username: decoded.name,
           password: "thisisdefaultpassword",
         })
+        setProgress(100);
         console.log("Successfully signed up");
         setIsSuccess(true);
       } catch(err) {
@@ -106,6 +113,12 @@ function Signup() {
   return (
     <div className="m-8 overflow-x-hidden xxsm:m-5 md:m-14">
       <Navbar />
+      <TopLoadingBar
+        color="#3B82F6"
+        progress={progress}
+        onLoaderFinished={() => setProgress(0)}
+        height={6}
+      />
       <div className="grid md:place-items-center">
         <div className="bg-secondary border-2 border-[#686868] rounded-md py-6 px-4 mt-20 xxsm:w-11/12 xsm:w-full md:w-7/12 lg:w-5/12 xl:w-3/12 px-8">
           <h1 className="text-4xl font-header font-semibold text-blue text-center mb-9">Signup</h1>
