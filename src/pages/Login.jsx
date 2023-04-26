@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, Link, useLocation } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
 import axios from 'axios';
 import Navbar from '../components/Navbar'
@@ -7,6 +7,7 @@ import Footer from '../components/Footer';
 import Bg from '../assets/bg_2.png';
 import process from 'process';
 import jwt_decode from 'jwt-decode';
+import TopLoadingBar from 'react-top-loading-bar';
 
 import { ReactComponent as Loading } from '../assets/loading.svg';
 
@@ -14,6 +15,7 @@ import { IoEyeSharp } from 'react-icons/io5';
 
 import { buildUrl } from '../utils/buildUrl';
 import { useSetUserId } from '../hooks/useSetUserId';
+
 
 function Login() {
   const [ username, setUsername ] = useState("");
@@ -23,13 +25,15 @@ function Login() {
   const [isInvalid, setIsInvalid ] = useState(false);
   const [isLoaded, setIsLoaded ] = useState(true);
   const [ noGoogleAccount, setNoGoogleAccount ] = useState(false);
-  const [ user, setUser ] = useState({});
+  const [ progress, setProgress ] = useState(0);
+  const location = useLocation();
 
   const navigate = useNavigate();
 
   const submitInfo = async (e) => {
     e.preventDefault();
     setIsLoaded(false);
+    setProgress(30);
     try {
       const response = await axios.post(buildUrl('auth/login'), {
         username,
@@ -39,12 +43,13 @@ function Login() {
       setCookies('access_id', response.data.id);
       setCookies('access_token', response.data.token);
       useSetUserId(response);
-
+      
       if(!response.data.token) {
         setIsInvalid(true);
         setIsLoaded(true);
         return;
       }
+      setProgress(100);
       navigate('/pins/all/');
     } catch(err) {
       console.log(err);
@@ -93,12 +98,26 @@ function Login() {
         { theme: "outline", size: "extra_large", shape: "rectangular", text: "continue_with", width: "270", height: "50"}
       )
     }
+    const env = process.env
+    console.log(env);
   }, [])
-  
 
+  useEffect(() => {
+    setProgress(30)
+    setTimeout(() => {
+      setProgress(100)
+    },1500)
+  },[location])
+  
   return (
     <div className="m-8 overflow-x-hidden">
       <Navbar />
+      <TopLoadingBar
+        color="#0067c7"
+        progress={progress}
+        onLoaderFinished={() => setProgress(0)}
+        height={6}
+      />
       <div className="grid place-items-center">
         <div className="bg-secondary border-2 border-[#686868] rounded-md py-6 px-4 mt-20 xxxsm:w-10/12 md:w-7/12 lg:w-5/12 xl:w-2/12">
           {

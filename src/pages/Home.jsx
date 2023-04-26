@@ -1,19 +1,36 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import { Link, useLocation } from 'react-router-dom'
 import { AiFillGithub } from 'react-icons/ai';
 import { SiStackexchange } from 'react-icons/si';
 import { RxCube } from 'react-icons/rx';
 import { BsGrid3X3 } from 'react-icons/bs';
 import { ReactComponent as Bg } from '../assets/bg.svg';
 import { motion } from 'framer-motion';
+import TopLoadingBar from 'react-top-loading-bar'
 
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 
 const Home = () => {
+  const location = useLocation();
+  const [ progress, setProgress ] = useState(0);
+
+  useEffect(() => {
+    setProgress(30);
+    setTimeout(() => {
+      setProgress(100);
+    },1500);
+  },[location])
+
   return (
     <div className="xxxsm:m-6 xxsm:m-8 xsm:m-14 sm:m-8 lg:m-32 xl:m-34">
       <Navbar />
+      <TopLoadingBar
+        color="#0067c7"
+        progress={progress}
+        onLoaderFinished={() => setProgress(0)}
+        height={6}
+      />
       <div className="flex flex-col gap-7 mt-14 xsm:h-2/3 md:grid grid-rows-2 place-items-center max-h-screen lg:flex-row mb-0 xl:flex flex-row mb-28">
        <div className="md: w-full">
           <h1 className="font-header text-white text-xl text-left sm:text-4xl xl:text-7xl">

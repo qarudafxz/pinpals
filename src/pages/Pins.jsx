@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { FiArrowUpRight } from 'react-icons/fi';
 import { BsTrash } from 'react-icons/bs';
 import { AiOutlineCamera } from 'react-icons/ai';
@@ -10,6 +10,7 @@ import { useGetUserId } from '../hooks/useGetUserId.js';
 import { buildUrl } from '../utils/buildUrl';
 import Logout from '../components/Logout';
 import ChangePassword from '../components/ChangePassword';
+import TopLoadingBar from 'react-top-loading-bar';
 
 import { ReactComponent as Loading } from '../assets/loading.svg';
 
@@ -25,6 +26,8 @@ function Pins() {
   const [ isSuccessPinsLoad, setSuccessPinsLoad] = useState(false);
   const [ pins, setAllPins ] = useState([]);
   const [ isChangePassword, setIsChangePassword ] = useState(false);
+  const [ progress, setProgress ] = useState(0);
+  const location = useLocation();
 
   const navigate = useNavigate();
   const userID = useGetUserId();
@@ -101,10 +104,10 @@ function Pins() {
   }
 
   useEffect(() => {
-    // if(!userID) {
-    //   alert('Please login first')
-    //   navigate('/auth/login')
-    // }
+    if(!userID) {
+      alert('Please login first')
+      navigate('/auth/login')
+    }
 
     getImageLink();
 
@@ -112,9 +115,22 @@ function Pins() {
     getFirstName();
   }, []);
 
+  useEffect(() => {
+    setProgress(30);
+    setTimeout(() => {
+      setProgress(100);
+    },1500)
+  }, [location])
+
   return (
     <div className="m-8 overflow-x-hidden  md:m-20">
       <Logout />
+      <TopLoadingBar 
+        color="#0085FF"
+        progress={progress}
+        onLoaderFinished={() => setProgress(0)}
+        height={6}
+      />
       <div>
         <div className="flex flex-row gap-7 my-16 place-content-center items-center">
             {
