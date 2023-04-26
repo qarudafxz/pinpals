@@ -5,6 +5,8 @@ import axios from 'axios';
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer';
 import Bg from '../assets/bg_2.png';
+import process from 'process';
+import jwt_decode from 'jwt-decode';
 
 import { ReactComponent as Loading } from '../assets/loading.svg';
 
@@ -20,6 +22,8 @@ function Login() {
   const [_, setCookies] = useCookies(['access_token']);
   const [isInvalid, setIsInvalid ] = useState(false);
   const [isLoaded, setIsLoaded ] = useState(true);
+  const [ noGoogleAccount, setNoGoogleAccount ] = useState(false);
+  const [ user, setUser ] = useState({});
 
   const navigate = useNavigate();
 
@@ -47,6 +51,28 @@ function Login() {
     }
   }
 
+  const handleCallbackResponse = async (response) => {
+    setIsLoaded(false);
+    const user = jwt_decode(response.credential);
+  
+    try {
+      const response = await axios.post(buildUrl('auth/googleLogin'), {
+        firstName: user.name.toString()
+      })
+
+      setCookies('access_id', response.data.userID);
+      setCookies('access_token', response.data.token);
+      localStorage.setItem('userID', response.data.userID);
+
+      setTimeout(() => {
+        navigate('/pins/all/');
+      },1500)
+    } catch(err) {
+      setNoGoogleAccount(true);
+      setIsLoaded(true);
+    }
+  }
+
   useEffect(() => {
     if(isInvalid) {
       setTimeout(() => {
@@ -54,6 +80,21 @@ function Login() {
       },3000)
     }
   },[isInvalid] )
+
+  useEffect(() => {
+    if (window.google) {
+      google.accounts.id.initialize({
+        client_id:"922739528134-8oeaqfup6ug03sdlt1i12qvuhg99s0rd.apps.googleusercontent.com",
+        callback: handleCallbackResponse
+      }) 
+  
+      google.accounts.id.renderButton(
+        document.getElementById("signInDiv"),
+        { theme: "outline", size: "extra_large", shape: "rectangular", text: "continue_with", width: "270", height: "50"}
+      )
+    }
+  }, [])
+  
 
   return (
     <div className="m-8 overflow-x-hidden">
@@ -70,6 +111,8 @@ function Login() {
           }
           <h1 className="text-4xl font-header font-semibold text-blue text-center mb-9">Login</h1>
             <form className="flex flex-col gap-2" onSubmit={submitInfo}>
+              { isInvalid && <h1 className="font-body text-sm text-red-600 mt-2">Username or Password Incorrect</h1> }
+              { noGoogleAccount && <h1 className="font-body text-sm text-red-600 mt-2">Sign Up with Google first</h1> }
               <input type="text" className="focus:outline-none font-body bg-[#686868] rounded-md py-2 pl-3 text-white" placeholder="Username" required onChange={(e) => setUsername(e.target.value)}></input>
               <div className="relative">
                 <input
@@ -84,9 +127,8 @@ function Login() {
                   onClick={() => setIsVisible(!isVisible)}
                 />
               </div>
-              {
-                isInvalid && <h1 className="font-body text-sm text-red-600 mt-2">Username or Password Incorrect</h1>
-              }
+              <p className="text-[#686868] text-center"><hr className="relative top-3 w-5/12"/> <hr className="relative top-3 left-40 w-5/12"/>OR</p>
+              <div id="signInDiv"></div>
               <button className="bg-blue py-2 px-4 rounded-md cursor-pointer font-body font-semibold text-white mt-10">Log In</button>
             </form>
             <h1 className="font-body text-center text-sm text-white mt-5">Don't have an account? <Link to={'/auth/signup'} className="text-blue italic">Get Started</Link></h1>

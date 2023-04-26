@@ -101,10 +101,10 @@ function Pins() {
   }
 
   useEffect(() => {
-    if(!userID) {
-      alert('Please login first')
-      navigate('/auth/login')
-    }
+    // if(!userID) {
+    //   alert('Please login first')
+    //   navigate('/auth/login')
+    // }
 
     getImageLink();
 

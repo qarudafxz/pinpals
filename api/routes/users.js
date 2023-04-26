@@ -13,15 +13,15 @@ router.post("/signup", async (req, res) => {
 
 	if (user) return res.status(400).json({ message: "User already exist" });
 
-	const userRemoveWhite = username.replace(/\s/g, "");
-	const passRemoveWhite = password.replace(/\s/g, "");
+	// const userRemoveWhite = username.replace(/\s/g, "");
+	// const passRemoveWhite = password.replace(/\s/g, "");
 
-	const hashedPassword = await bcrypt.hash(passRemoveWhite, 10);
+	const hashedPassword = await bcrypt.hash(password, 10);
 
 	const newUser = new UserModel({
 		firstName,
 		lastName,
-		username: userRemoveWhite,
+		username,
 		password: hashedPassword,
 		imageUrl,
 	});
@@ -46,6 +46,25 @@ router.post("/login", async (req, res) => {
 
 	const token = jwt.sign({ id: user._id }, "secret");
 	res.json({ token, userID: user._id, message: "User logged in successfully" });
+});
+
+//login with google
+router.post("/googleLogin", async (req, res) => {
+	try {
+		const { firstName } = req.body;
+
+		const user = await UserModel.findOne({ firstName });
+		if (!user) return res.status(404).json({ message: "User not found!" });
+
+		const token = jwt.sign({ id: user._id }, "secret");
+		res.json({
+			token,
+			userID: user._id,
+			message: "User logged in successfully",
+		});
+	} catch (err) {
+		res.status(500).json({ message: err.message });
+	}
 });
 
 //add profile photo
