@@ -105,13 +105,28 @@ function Signup() {
   
       google.accounts.id.renderButton(
         document.getElementById("signInDiv"),
-        { theme: "outline", size: "extra_large", shape: "rectangular", text: "continue_with", width: "375", height: "50"}
+        {
+          theme: "outline",
+          size: "large",
+          text: "continue_with",
+          shape: "rectangular",
+          width: `${window.innerWidth >= 280 && window.innerWidth <= 270 ? 220 
+            : window.innerWidth > 375 && window.innerWidth <= 425 ? 290 
+            : window.innerWidth > 425 && window.innerWidth <= 1024 ? 390 
+            : window.innerWidth > 1024 && window.innerWidth <= 1440 ? 295 
+            : window.innerWidth > 1440 && window.innerWidth <= 2560 ? 450 : 200
+          }`,
+          height: "50",
+          longtitle: "true",
+          onsuccess: signInDiv,
+          onfailure: signInDiv,
+        }
       )
     }
   }, [])
 
   return (
-    <div className="m-8 overflow-x-hidden xxsm:m-5 md:m-14">
+    <div>
       <Navbar />
       <TopLoadingBar
         color="#3B82F6"
@@ -119,8 +134,8 @@ function Signup() {
         onLoaderFinished={() => setProgress(0)}
         height={6}
       />
-      <div className="grid md:place-items-center">
-        <div className="bg-secondary border-2 border-[#686868] rounded-md py-6 px-4 mt-20 xxsm:w-11/12 xsm:w-full md:w-7/12 lg:w-5/12 xl:w-3/12 px-8">
+      <div className="mx-8 md:m-0">
+        <div className="m-auto bg-secondary border-2 border-[#686868] rounded-md py-6 px-4 mt-20 xsm:w-full md:w-7/12 lg:w-5/12 xl:w-3/12 px-8">
           <h1 className="text-4xl font-header font-semibold text-blue text-center mb-9">Signup</h1>
             { hasGoogleAccount && <h1 className="my-4 font-body text-sm text-red-600 mt-2">Account already exists</h1> }
             <form className="flex flex-col gap-2" onSubmit={setInfo}>
@@ -140,9 +155,13 @@ function Signup() {
                   onClick={() => setIsVisible(!isVisible)}
                 />
               </div>
-
+              <input type="password" className="focus:outline-none font-body bg-[#686868] rounded-md py-2 pl-3 text-white" placeholder="Confirm Password" required onChange={(e) => setConfirmPassword(e.target.value)}></input>
               { isInvalid && <p className="text-red-500 text-sm font-body font-semibold">Password doesn't match</p>}
-              <p className="text-[#686868] text-center"><hr className="relative top-3 w-5/12"/> <hr className="relative top-3 left-56 w-5/12"/>OR</p>
+              <div className="flex flex-row items-center place-content-center my-2">
+                <hr className="w-5/12 border-[#505050] "/>
+                <p className="px-10 text-[#505050] text-sm">OR</p>
+                <hr className="w-5/12 border-[#505050] "/>
+              </div>
               <div id="signInDiv" className="w-full"></div>
               <button className="bg-blue py-2 px-4 rounded-md cursor-pointer font-body font-semibold text-white mt-10 xl:mb-8">Sign Up</button>
               {

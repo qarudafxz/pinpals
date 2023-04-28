@@ -3,8 +3,8 @@ import Logo from '../assets/logo.png';
 
 function Footer() {
   return (
-    <div>
-      <div className="grid grid-cols-2 gap-10 mt-36 border-t-2 border-t-[#5B5B5B] pt-10 xl:mt-72">
+    <div className="p-10">
+      <div className="grid grid-cols-2 gap-10 mt-36 border-t-2 border-t-[#5B5B5B] xl:mt-72">
         <ul className="flex flex-col gap-4">
           <li className="text-white font-body font-semibold text-lg">Socials</li>
           <li className="text-lg font-body font-normal text-sm hover:text-[#767676]"><a href="https://facebook.com/francisj.tinao/" target="_blank">Facebook</a></li>

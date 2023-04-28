@@ -9,7 +9,7 @@ function Navbar() {
   const [ isClicked, setIsClicked ] = useState(false);
 
   return (
-    <div className="flex flex-row justify-between items-center">
+    <div className="flex flex-row justify-between items-center mx-8 mt-8">
       <Link to={'/'}><img src={Logo} alt="Pinpal" className="h-8 xl:h-12"/></Link>
       <GiHamburgerMenu className="text-2xl text-lg cursor-pointer xsm: text-3xl lg:hidden" onClick={() => setIsClicked(!isClicked)}/>
       <div className="xxxsm:hidden xxsm:hidden xsm: hidden lg:flex flex-row gap-6 items-center relative z-10">

@@ -161,7 +161,7 @@ function Login() {
                   onClick={() => setIsVisible(!isVisible)}
                 />
               </div>
-              <div className="flex flex-row items-center place-content-center my-8">
+              <div className="flex flex-row items-center place-content-center my-2">
                 <hr className="w-5/12 border-[#505050] "/>
                 <p className="px-10 text-[#505050] text-sm">OR</p>
                 <hr className="w-5/12 border-[#505050] "/>
