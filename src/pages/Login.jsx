@@ -95,7 +95,22 @@ function Login() {
   
       google.accounts.id.renderButton(
         document.getElementById("signInDiv"),
-        { theme: "outline", size: "extra_large", shape: "rectangular", text: "continue_with", width: "270", height: "50"}
+        {
+          theme: "outline",
+          size: "large",
+          text: "continue_with",
+          shape: "rectangular",
+          width: `${window.innerWidth >= 280 && window.innerWidth <= 375 ? 220 
+            : window.innerWidth > 375 && window.innerWidth <= 425 ? 324 
+            : window.innerWidth > 425 && window.innerWidth <= 1024 ? 390 
+            : window.innerWidth > 1024 && window.innerWidth <= 1440 ? 400 
+            : window.innerWidth > 1440 && window.innerWidth <= 2560 ? 270 : 200
+          }`,
+          height: "50",
+          longtitle: "true",
+          onsuccess: signInDiv,
+          onfailure: signInDiv,
+        }
       )
     }
     const env = process.env
@@ -118,8 +133,8 @@ function Login() {
         onLoaderFinished={() => setProgress(0)}
         height={6}
       />
-      <div className="grid place-items-center">
-        <div className="bg-secondary border-2 border-[#686868] rounded-md py-6 px-4 mt-20 xxxsm:w-10/12 md:w-7/12 lg:w-5/12 xl:w-2/12">
+      <div>
+        <div className="bg-secondary border-2 border-[#686868] rounded-md py-6 px-4 mt-20 m-auto md:w-7/12 lg:w-5/12 xl:w-2/12">
           {
             !isLoaded && (
               <div className="grid place-items-center">
@@ -146,7 +161,11 @@ function Login() {
                   onClick={() => setIsVisible(!isVisible)}
                 />
               </div>
-              <p className="text-[#686868] text-center"><hr className="relative top-3 w-5/12"/> <hr className="relative top-3 left-40 w-5/12"/>OR</p>
+              <div className="flex flex-row items-center place-content-center my-8">
+                <hr className="w-5/12 border-[#505050] "/>
+                <p className="px-10 text-[#505050] text-sm">OR</p>
+                <hr className="w-5/12 border-[#505050] "/>
+              </div>
               <div id="signInDiv"></div>
               <button className="bg-blue py-2 px-4 rounded-md cursor-pointer font-body font-semibold text-white mt-10">Log In</button>
             </form>
