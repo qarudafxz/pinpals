@@ -10,6 +10,11 @@ const PinSchema = new mongoose.Schema({
 		ref: "users_datas",
 		required: true,
 	},
+	pinCategory: {
+		type: String,
+		required: true,
+		unique: true,
+	},
 });
 
 export const PinModel = mongoose.model(collectionName, PinSchema);

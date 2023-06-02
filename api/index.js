@@ -1,10 +1,12 @@
 import express from "express";
 import cors from "cors";
 import mongoose from "mongoose";
+import morgan from "morgan";
 import dotenv from "dotenv";
 
 import { userRouter } from "./routes/users.js";
 import { pinsRouter } from "./routes/pins.js";
+import { categoryRouter } from "./routes/category.js";
 
 dotenv.config();
 
@@ -14,9 +16,11 @@ const app = express();
 //middlewares
 app.use(express.json());
 app.use(cors());
+app.use(morgan("tiny"));
 
 app.use("/api/auth", userRouter);
 app.use("/api/pins", pinsRouter);
+app.use("/api/category", categoryRouter);
 
 mongoose.connect(URI, { useNewUrlParser: true, useUnifiedTopology: true });
 

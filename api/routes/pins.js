@@ -1,16 +1,16 @@
 import express from "express";
 
 import { PinModel } from "../models/Pins.js";
-import { UserModel } from "../models/Users.js";
 
 const router = express.Router();
 
 router.post("/add-pin", async (req, res) => {
-	const { pinName, pinLink, pinOwner } = req.body;
+	const { pinName, pinLink, pinOwner, pinCategory } = req.body;
 	const newPin = new PinModel({
 		pinName,
 		pinLink,
 		pinOwner,
+		pinCategory,
 	});
 
 	await newPin.save();
