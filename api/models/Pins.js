@@ -13,7 +13,6 @@ const PinSchema = new mongoose.Schema({
 	pinCategory: {
 		type: String,
 		required: true,
-		unique: true,
 	},
 });
 
