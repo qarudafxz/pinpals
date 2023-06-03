@@ -41,14 +41,14 @@ router.post("/add/:id", async (req, res) => {
 			return res.json({ message: "Category name is required" });
 		}
 
-		// Check if the category already exists for the user
+		// Check if the category already exists for the same user
 		const existingCategory = await CategoryModel.findOne({
 			categoryOwner: user._id,
 			name: categoryName,
 		});
 
 		if (existingCategory) {
-			return res.json({ message: "Category already exists" });
+			return res.json({ message: "Category already exists for the user" });
 		}
 
 		// Create a new category and save it

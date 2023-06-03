@@ -36,7 +36,6 @@ function Pins() {
 	const [options, setOptions] = useState([]);
 	const [selectedCategory, setSelectedCategory] = useState("All Categories");
 	const [createPinCat, setCreatePinCat] = useState("");
-	const [error, setError] = useState("");
 
 	const navigate = useNavigate();
 	const userID = useGetUserId();
@@ -71,10 +70,13 @@ function Pins() {
 
 	const createCategory = async (e) => {
 		e.preventDefault();
+		setPinsLoaded(true);
 		try {
 			await axios.post(buildUrl(`category/add/${userID}`), {
 				categoryName,
 			});
+			setIsAddCategory(false);
+			window.location.reload();
 		} catch (err) {
 			console.log(err);
 		}
@@ -153,7 +155,6 @@ function Pins() {
 			setAllPins(response.data.pins);
 			setPinsLoaded(false);
 		} catch (err) {
-			setError(err.response.data);
 			setAllPins([]);
 			setPinsLoaded(false);
 		}
@@ -318,6 +319,7 @@ function Pins() {
 						key={options.map((option) => option.id).join("-")}
 					/>
 				</div>
+				{pinsLoaded && <Loading />}
 				{isAddCategory && (
 					<form
 						onSubmit={createCategory}
